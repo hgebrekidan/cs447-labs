@@ -13,23 +13,17 @@ http.createServer((req,res)=>{
             const postBody=Buffer.concat(body).toString();
             const splitted=postBody.split('=');
            
-            fs.writeFile('./myText.txt',postBody,(err)=>{
-                if(err){
-                    throw err;
-                }
+            fs.writeFile('./myText.txt',splitted[1],()=>{
+                
             // res.end('Sign up Successfully!!');  
             }) 
         })
     
-    res.statusCode = 302;
-    res.setHeader("Location", "/");
-    res.end();
-    
-    
+    fs.createReadStream('index.html').pipe(res);  
 }else{
     // res.end('404 page not found');
-    fs.createReadStream('index.html').pipe(res);
-    res.end();
+    // fs.createReadStream('index.html').pipe(res);
+    res.end('404 page not found);
     }
  
 }).listen(8080,()=>console.log('listening 8080'))
